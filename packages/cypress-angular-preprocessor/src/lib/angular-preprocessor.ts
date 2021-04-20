@@ -1,10 +1,9 @@
-import * as webpackPreprocessor from '@cypress/webpack-preprocessor';
 import {
   AngularCompilerPlugin,
   AngularCompilerPluginOptions,
 } from '@ngtools/webpack';
 import { EventEmitter } from 'events';
-
+import {startDevServer} from '@cypress/webpack-dev-server';
 /**
  * Duplicate of {@link https://github.com/cypress-io/cypress/blob/5e05495abc4c7c5b95eebff90d9c763db7fe726d/npm/webpack-preprocessor/index.ts#L101}
  * meanwhile issue {@link https://github.com/cypress-io/cypress/issues/9569} is resolved.
@@ -20,16 +19,10 @@ export interface FileEvent extends EventEmitter {
  */
 export type FilePreprocessor = (fileEvent: FileEvent) => Promise<string>;
 
-export const angularPreprocessor = (
-  cypressConfig,
-  {
-    angularCompilerOptions = {},
-  }: {
-    angularCompilerOptions?: Partial<AngularCompilerPluginOptions>;
-  } = {}
-): FilePreprocessor => async (fileEvent) => {
-  const filePreprocessor = webpackPreprocessor({
-    webpackOptions: {
+export const devserver = (options: any) => {
+  return startDevServer({
+    options,
+    webpackConfig: {
       /* Performance boost. */
       devtool: false,
       resolve: {
@@ -56,13 +49,11 @@ export const angularPreprocessor = (
       plugins: [
         new AngularCompilerPlugin({
           directTemplateLoading: true,
-          tsConfigPath: cypressConfig.env.tsConfig,
+          tsConfigPath: options.env.tsConfig,
           sourceMap: false,
           forkTypeChecker: true,
-          ...angularCompilerOptions,
         }),
       ],
     },
   });
-  return filePreprocessor(fileEvent);
 };

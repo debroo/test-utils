@@ -1,1 +1,1 @@
-export { angularPreprocessor } from './lib/angular-preprocessor';
+export { devserver } from './lib/angular-preprocessor';

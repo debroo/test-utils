@@ -1,5 +1,5 @@
-import { mount } from '@jscutlery/cypress-mount';
 import { CounterComponent } from './../fixtures/counter.component';
+import { mount } from '@jscutlery/cypress-mount';
 
 describe(CounterComponent.name, () => {
   const getIncrementButton = () => cy.get('[data-role=increment]');

@@ -9,6 +9,5 @@
   "video": true,
   "videosFolder": "../../dist/cypress/packages/cypress-mount-integration/videos",
   "screenshotsFolder": "../../dist/cypress/packages/cypress-mount-integration/screenshots",
-  "chromeWebSecurity": false,
-  "experimentalComponentTesting": true
+  "chromeWebSecurity": false
 }
